@@ -1,0 +1,12 @@
+{
+  "schema_version": "1",
+  "name": "yfinance",
+  "version": "1.0.0",
+  "description": "MCP server that exposes Yahoo Finance price data.",
+  "contact_email": "aysuh2991@gmail.com",
+  "entrypoints": [
+    {
+      "type": "stdio"
+    }
+  ]
+}

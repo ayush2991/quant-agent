@@ -1,7 +1,6 @@
 fastapi
 uvicorn
-python-dotenv
 openai-agents
 pydantic
-tensorflow
 requests
+yfinance

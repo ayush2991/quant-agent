@@ -1,12 +1,16 @@
-import asyncio
 import logging
 from fastapi import FastAPI
 from openai import OpenAI
 from agents import Agent, Runner
-import uvicorn
+from yfinance_tools import news
 
-logging.basicConfig(level=logging.DEBUG)
+logging.basicConfig(
+    level=logging.WARNING,
+    format="%(asctime)s - %(name)s - %(levelname)s - %(message)s",
+    force=True,
+)
 logger = logging.getLogger(__name__)
+logger.setLevel(logging.INFO)
 
 app = FastAPI()
 client = OpenAI()
@@ -15,15 +19,15 @@ agent = Agent(
     name="quant-agent",
     instructions="You are a helpful quantitative trading assistant.",
     model="gpt-5-nano",
+    tools=[news],
 )
 
 
-@app.get("/chat")
-async def chat(message: str):
+@app.get("/ask")
+async def ask(message: str):
     logger.info(f"Incoming request: message='{message}'")
     try:
         result = await Runner.run(agent, message)
-        logger.debug(f"Agent result: {result.final_output}")
         return {"response": result.final_output}
     except Exception as e:
         logger.error(f"Error processing message: {e}", exc_info=True)
@@ -37,5 +41,7 @@ def health():
 
 
 if __name__ == "__main__":
+    import uvicorn
+
     logger.info("Starting Quant Agent server on 0.0.0.0:8000")
-    uvicorn.run(app, host="0.0.0.0", port=8000, log_level="debug")
+    uvicorn.run("main:app", host="0.0.0.0", port=8000, reload=True)

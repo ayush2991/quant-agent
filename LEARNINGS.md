@@ -7,6 +7,7 @@
 - **FastAPI Logging**: Set up logging to monitor server activity and debug requests
 - **OpenAI Agents SDK Basics**: Learned how to initialize and use OpenAI agents for intelligent responses
 - **Async IO & Await**: Implemented asynchronous programming patterns for non-blocking operations
+- **YFinance API & Tool Use**: Integrated yfinance's Search API and created a custom tool for fetching and formatting stock news
 
 ## Project Context
 
