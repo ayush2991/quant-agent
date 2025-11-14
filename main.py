@@ -3,6 +3,7 @@ from fastapi import FastAPI
 from openai import OpenAI
 from agents import Agent, Runner
 from yfinance_tools import news
+from fastapi.middleware.cors import CORSMiddleware
 
 logging.basicConfig(
     level=logging.WARNING,
@@ -15,6 +16,13 @@ logger.setLevel(logging.INFO)
 app = FastAPI()
 client = OpenAI()
 
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["http://localhost:5173"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 agent = Agent(
     name="quant-agent",
     instructions="You are a helpful quantitative trading assistant.",

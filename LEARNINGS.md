@@ -12,3 +12,12 @@
 ## Project Context
 
 Building a quantitative analysis chatbot that answers financial and investment-related questions using FastAPI and OpenAI agents.
+
+## React Frontend
+
+- Controlled components: the frontend uses React's `useState` to manage the query input (`message`) and the returned `output`.
+- Asynchronous requests: the UI performs an async `fetch` to the backend `/ask` endpoint, with `loading` and `error` state to reflect request progress and failures.
+- Declarative rendering: the response (or error) is rendered into a `<pre>` block via React state rather than manipulating the DOM directly.
+- Accessibility: the output area uses `aria-live="polite"` so screen readers are notified of updates.
+- Error handling: the frontend parses JSON responses and displays friendly error messages when the request fails.
+- UX details: a controlled input, a single button to trigger the request, and visual feedback (disabled button while loading) make the interface simple and clear.
