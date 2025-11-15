@@ -2,19 +2,19 @@ import logging
 from fastapi import FastAPI
 from openai import OpenAI
 from agents import Agent, Runner
-from yfinance_tools import news
+from yfinance_tools import router, news, ticker_data
 from fastapi.middleware.cors import CORSMiddleware
 
 logging.basicConfig(
-    level=logging.WARNING,
-    format="%(asctime)s - %(name)s - %(levelname)s - %(message)s",
-    force=True,
+    level=logging.WARNING, format="%(asctime)s - %(name)s - %(levelname)s - %(message)s"
 )
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.INFO)
 
-app = FastAPI()
 client = OpenAI()
+
+app = FastAPI()
+app.include_router(router)
 
 app.add_middleware(
     CORSMiddleware,
@@ -23,11 +23,12 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
 agent = Agent(
     name="quant-agent",
     instructions="You are a helpful quantitative trading assistant.",
     model="gpt-5-nano",
-    tools=[news],
+    tools=[news, ticker_data],
 )
 
 
