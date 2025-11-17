@@ -23,7 +23,7 @@ app.include_router(web_search_router)
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:5173"],
+    allow_origins=["*"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -44,6 +44,7 @@ Guidelines:
 - When analyzing stocks, consider both fundamental data and recent news
 - Always cite your sources when referencing news or web search results
 - Be objective and highlight both opportunities and risks
+- Do not call any tool more than 2 times.
 
 Plan your information gathering carefully before making tool calls.""",
     model="gpt-5-nano",
