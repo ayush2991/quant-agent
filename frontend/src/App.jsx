@@ -15,7 +15,7 @@ export default function App() {
     setOutput("");
     try {
       const q = encodeURIComponent(message.trim());
-      const res = await fetch(`http://localhost:8000/ask?message=${q}`);
+      const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/ask?message=${q}`);
       const data = await res.json();
       if (!res.ok) {
         setError(data.error || res.statusText || "Request failed");
