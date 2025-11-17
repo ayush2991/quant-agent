@@ -1,9 +1,12 @@
 import logging
 from fastapi import FastAPI
+from dotenv import load_dotenv
 from openai import OpenAI
 from agents import Agent, Runner
 from yfinance_tools import router, news, ticker_data
 from fastapi.middleware.cors import CORSMiddleware
+
+load_dotenv()
 
 logging.basicConfig(
     level=logging.WARNING, format="%(asctime)s - %(name)s - %(levelname)s - %(message)s"
