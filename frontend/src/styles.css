@@ -28,6 +28,17 @@ pre { margin-top: 16px; background: rgba(255,255,255,0.03); padding: 12px; borde
 
 /* Controls */
 .controls { display:flex; gap:8px; align-items:center; }
-.query-input { flex:1; padding:8px 10px; border-radius:6px; border:1px solid rgba(255,255,255,0.06); background: rgba(255,255,255,0.03); color:var(--text); outline: none; transition: border-color 0.2s; }
+.query-input { flex:1; padding:8px 10px; border-radius:6px; border:1px solid rgba(255,255,255,0.06); background: rgba(255,255,255,0.03); color:var(--text); outline: none; transition: border-color 0.2s, opacity 0.2s; }
 .query-input:focus { border-color: var(--accent); }
+.query-input:disabled { opacity: 0.5; cursor: not-allowed; }
 .error { color: #ffb4b4; background: rgba(255,50,50,0.05); }
+
+/* Loading states */
+.loading-text { display: flex; align-items: center; gap: 8px; }
+.spinner { width: 12px; height: 12px; border: 2px solid #04243a; border-top-color: transparent; border-radius: 50%; animation: spin 0.8s linear infinite; }
+@keyframes spin { to { transform: rotate(360deg); } }
+
+.loading-message { margin-top: 16px; padding: 16px; background: rgba(96,165,250,0.05); border: 1px solid rgba(96,165,250,0.15); border-radius: 8px; display: flex; align-items: center; gap: 12px; }
+.pulse { width: 8px; height: 8px; background: var(--accent); border-radius: 50%; animation: pulse 1.5s ease-in-out infinite; }
+@keyframes pulse { 0%, 100% { opacity: 0.4; transform: scale(1); } 50% { opacity: 1; transform: scale(1.2); } }
+.loading-message p { margin: 0; color: var(--muted); font-size: 14px; }
