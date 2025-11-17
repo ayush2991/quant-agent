@@ -3,7 +3,13 @@ from fastapi import FastAPI
 from dotenv import load_dotenv
 from openai import OpenAI
 from agents import Agent, Runner
-from yfinance_tools import router as yfinance_router, news, ticker_data, stock_info
+from yfinance_tools import (
+    router as yfinance_router,
+    news,
+    stock,
+    financials,
+    analysis_and_holdings,
+)
 from web_search_tools import router as web_search_router, web_search
 from fastapi.middleware.cors import CORSMiddleware
 
@@ -48,7 +54,7 @@ Guidelines:
 
 Plan your information gathering carefully before making tool calls.""",
     model="gpt-5-nano",
-    tools=[news, ticker_data, web_search, stock_info],
+    tools=[news, stock, financials, analysis_and_holdings, web_search],
 )
 
 
