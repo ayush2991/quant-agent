@@ -99,3 +99,36 @@ def ticker_data(ticker: str) -> TickerInfo:
     )
     logger.info("Retrieved data for ticker=%s", ticker)
     return ticker_info
+
+
+class FullStockInfo(BaseModel):
+    symbol: str
+    info: dict
+
+
+@function_tool
+@router.get("/stock_info/{ticker}")
+def stock_info(ticker: str) -> FullStockInfo:
+    """Get full raw yfinance `info` dictionary for a ticker.
+
+    Parameters
+    ----------
+    ticker : str
+        The stock ticker symbol (e.g., "AAPL", "TSLA").
+
+    Returns
+    -------
+    FullStockInfo
+        Object containing the symbol and the entire `info` dict from yfinance.
+        If retrieval fails, returns an empty dict for `info`.
+    """
+    logger.info("stock_info() called with ticker=%s", ticker)
+    try:
+        yf_ticker: YFTicker = yfinance.Ticker(ticker)
+        info = yf_ticker.info  # This is a dict with many metadata fields
+    except Exception:
+        logger.error("Failed to retrieve stock info for ticker=%s", ticker)
+        info = {}
+
+    logger.info("Retrieved %d info fields for ticker=%s", len(info), ticker)
+    return FullStockInfo(symbol=ticker, info=info)

@@ -3,7 +3,7 @@ from fastapi import FastAPI
 from dotenv import load_dotenv
 from openai import OpenAI
 from agents import Agent, Runner
-from yfinance_tools import router as yfinance_router, news, ticker_data
+from yfinance_tools import router as yfinance_router, news, ticker_data, stock_info
 from web_search_tools import router as web_search_router, web_search
 from fastapi.middleware.cors import CORSMiddleware
 
@@ -40,14 +40,14 @@ Your capabilities:
 
 Guidelines:
 - Provide clear, concise, and data-driven responses
+- Dont ask follow-ups; answer based on the information you gather
 - When analyzing stocks, consider both fundamental data and recent news
 - Always cite your sources when referencing news or web search results
 - Be objective and highlight both opportunities and risks
-- Each tool should be invoked at most once per query - gather all necessary information efficiently
 
-Important: Use each tool only once. Plan your information gathering carefully before making tool calls.""",
+Plan your information gathering carefully before making tool calls.""",
     model="gpt-5-nano",
-    tools=[news, ticker_data, web_search],
+    tools=[news, ticker_data, web_search, stock_info],
 )
 
 

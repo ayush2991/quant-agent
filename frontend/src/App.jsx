@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 
 export default function App() {
-  const [message, setMessage] = useState("Give me a one-line market summary.");
+  const [message, setMessage] = useState("Analyze AAPL stock performance over the last 12 months.");
   const [output, setOutput] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
