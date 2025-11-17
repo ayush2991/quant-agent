@@ -21,10 +21,13 @@ header { margin-bottom: 24px;}
 .app { max-width: 720px; margin: 48px auto; padding: 24px; }
 header h1 { margin: 0 0 4px 0; font-size: 28px; }
 header p { margin: 0 0 18px 0; color: var(--muted); }
-button { background: var(--accent); color: #04243a; border: none; padding: 10px 14px; border-radius: 8px; cursor: pointer; }
+button { background: var(--accent); color: #04243a; border: none; padding: 10px 14px; border-radius: 8px; cursor: pointer; font-weight: 500; transition: opacity 0.2s; }
+button:hover:not(:disabled) { opacity: 0.9; }
+button:disabled { opacity: 0.5; cursor: not-allowed; }
 pre { margin-top: 16px; background: rgba(255,255,255,0.03); padding: 12px; border-radius: 8px; color: var(--muted); overflow: auto; white-space: pre-wrap;}
 
 /* Controls */
 .controls { display:flex; gap:8px; align-items:center; }
-.query-input { flex:1; padding:8px 10px; border-radius:6px; border:1px solid rgba(255,255,255,0.06); background: rgba(255,255,255,0.03); color:var(--text); }
+.query-input { flex:1; padding:8px 10px; border-radius:6px; border:1px solid rgba(255,255,255,0.06); background: rgba(255,255,255,0.03); color:var(--text); outline: none; transition: border-color 0.2s; }
+.query-input:focus { border-color: var(--accent); }
 .error { color: #ffb4b4; background: rgba(255,50,50,0.05); }

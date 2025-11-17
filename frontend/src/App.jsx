@@ -6,12 +6,15 @@ export default function App() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
-  async function handleFetch() {
+  async function handleSubmit(e) {
+    e?.preventDefault();
+    if (!message.trim() || loading) return;
+    
     setLoading(true);
     setError(null);
     setOutput("");
     try {
-      const q = encodeURIComponent(message || "");
+      const q = encodeURIComponent(message.trim());
       const res = await fetch(`http://localhost:8000/ask?message=${q}`);
       const data = await res.json();
       if (!res.ok) {
@@ -34,17 +37,19 @@ export default function App() {
         <h1>Quant Agent</h1>
       </header>
       <main>
-        <div className="controls">
+        <form className="controls" onSubmit={handleSubmit}>
           <input
+            type="text"
             aria-label="query"
             value={message}
             onChange={(e) => setMessage(e.target.value)}
             className="query-input"
+            placeholder="Enter your query..."
           />
-          <button id="fetch-btn" onClick={handleFetch} disabled={loading}>
-            {loading ? "Loading…" : "Fetch sample data"}
+          <button type="submit" disabled={loading || !message.trim()}>
+            {loading ? "Loading…" : "Ask Agent"}
           </button>
-        </div>
+        </form>
 
         {error ? (
           <pre id="output" className="error" aria-live="polite">{error}</pre>
