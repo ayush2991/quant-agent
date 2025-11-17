@@ -23,8 +23,19 @@ class SearchResult(BaseModel):
 @router.get("/news/{query}")
 def news(query: str, news_count: int = 8) -> list[SearchResult]:
     """
-    Search for news and summaries about a stock.
-    - **query**: The stock ticker or company name to search for. eg: "AAPL" or "TSLA"
+    Search for recent news about a stock or company.
+
+    Parameters
+    ----------
+    query : str
+        Stock ticker or company name (e.g., "AAPL", "TSLA").
+    news_count : int, optional
+        Maximum number of news items to fetch (default: 8).
+
+    Returns
+    -------
+    list[SearchResult]
+        A list of news items with uuid, title, publisher, link, and publish time.
     """
     logger.info("news() called with query=%s news_count=%d", query, news_count)
     try:
@@ -62,11 +73,17 @@ class TickerInfo(BaseModel):
 @router.get("/ticker/{ticker}")
 def ticker_data(ticker: str) -> TickerInfo:
     """
-    Get ttm financials for a given stock ticker.
-    Args:
-        ticker (str): The stock ticker symbol. eg: "AAPL" or "TSLA"
-    Returns:
-        dict: A dictionary containing ttm financials.
+    Get trailing twelve-month (TTM) financials for a ticker.
+
+    Parameters
+    ----------
+    ticker : str
+        The stock ticker symbol (e.g., "AAPL", "TSLA").
+
+    Returns
+    -------
+    TickerInfo
+        Object containing the symbol and a dict of TTM financials.
     """
     logger.info("ticker_data() called with ticker=%s", ticker)
     try:

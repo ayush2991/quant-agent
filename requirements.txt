@@ -4,3 +4,5 @@ openai-agents
 pydantic
 yfinance
 dotenv
+requests
+diskcache
