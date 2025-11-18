@@ -42,3 +42,26 @@ pre { margin-top: 16px; background: rgba(255,255,255,0.03); padding: 12px; borde
 .pulse { width: 8px; height: 8px; background: var(--accent); border-radius: 50%; animation: pulse 1.5s ease-in-out infinite; }
 @keyframes pulse { 0%, 100% { opacity: 0.4; transform: scale(1); } 50% { opacity: 1; transform: scale(1.2); } }
 .loading-message p { margin: 0; color: var(--muted); font-size: 14px; }
+
+/* Markdown output styling */
+.markdown-output { margin-top: 16px; background: rgba(255,255,255,0.03); padding: 16px; border-radius: 8px; line-height: 1.6; }
+.markdown-output h1, .markdown-output h2, .markdown-output h3 { color: var(--text); margin-top: 24px; margin-bottom: 12px; font-weight: 600; }
+.markdown-output h1 { font-size: 24px; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 8px; }
+.markdown-output h2 { font-size: 20px; }
+.markdown-output h3 { font-size: 18px; }
+.markdown-output h1:first-child, .markdown-output h2:first-child, .markdown-output h3:first-child { margin-top: 0; }
+.markdown-output p { margin: 12px 0; color: var(--text); }
+.markdown-output ul, .markdown-output ol { margin: 12px 0; padding-left: 24px; color: var(--text); }
+.markdown-output li { margin: 6px 0; }
+.markdown-output strong { color: var(--text); font-weight: 600; }
+.markdown-output em { color: var(--muted); font-style: italic; }
+.markdown-output code { background: rgba(0,0,0,0.3); padding: 2px 6px; border-radius: 4px; font-family: "Courier New", monospace; font-size: 0.9em; color: #fbbf24; }
+.markdown-output pre { background: rgba(0,0,0,0.4); padding: 12px; border-radius: 6px; overflow-x: auto; margin: 12px 0; }
+.markdown-output pre code { background: none; padding: 0; color: var(--text); }
+.markdown-output a { color: var(--accent); text-decoration: none; }
+.markdown-output a:hover { text-decoration: underline; }
+.markdown-output blockquote { border-left: 3px solid var(--accent); padding-left: 16px; margin: 12px 0; color: var(--muted); font-style: italic; }
+.markdown-output table { border-collapse: collapse; width: 100%; margin: 12px 0; }
+.markdown-output th, .markdown-output td { border: 1px solid rgba(255,255,255,0.1); padding: 8px 12px; text-align: left; }
+.markdown-output th { background: rgba(255,255,255,0.05); font-weight: 600; }
+.markdown-output hr { border: none; border-top: 1px solid rgba(255,255,255,0.1); margin: 24px 0; }

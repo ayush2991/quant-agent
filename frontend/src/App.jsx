@@ -1,6 +1,7 @@
 import React, { useState } from "react";
+import ReactMarkdown from "react-markdown";
 
-const DEFAULT_QUERY = "Analyze AAPL stock performance over the last 12 months.";
+const DEFAULT_QUERY = "Is GOOG a good buy right now?";
 const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
 
 export default function App() {
@@ -49,9 +50,9 @@ export default function App() {
     
     if (output) {
       return (
-        <pre id="output" aria-live="polite">
-          {output}
-        </pre>
+        <div id="output" className="markdown-output" aria-live="polite">
+          <ReactMarkdown>{output}</ReactMarkdown>
+        </div>
       );
     }
     
