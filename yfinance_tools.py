@@ -20,51 +20,6 @@ class SearchResult(BaseModel):
 
 
 @function_tool
-@router.get("/news")
-def news(query: str, news_count: int = 8) -> list[SearchResult]:
-    """
-    Search for recent news about a stock or company.
-
-    Parameters
-    ----------
-    query : str
-        Stock ticker or company name (e.g., "AAPL", "TSLA").
-    news_count : int, optional
-        Maximum number of news items to fetch (default: 8).
-
-    Returns
-    -------
-    list[SearchResult]
-        A list of news items with uuid, title, publisher, link, and publish time.
-    """
-    logger.info("news() called with query=%s news_count=%d", query, news_count)
-    try:
-        search_results: YFSearch = yfinance.Search(query=query, news_count=news_count)
-    except Exception:
-        logger.error("Failed to perform yfinance.Search for query=%s", query)
-        return []
-
-    news_results = []
-    try:
-        for search_result in getattr(search_results, "news", []):
-            news_results.append(
-                SearchResult(
-                    uuid=search_result["uuid"],
-                    title=search_result["title"],
-                    publisher=search_result.get("publisher", ""),
-                    link=search_result.get("link", ""),
-                    providerPublishTime=search_result.get("providerPublishTime", 0),
-                )
-            )
-    except Exception:
-        logger.error("Error while parsing search results for query=%s", query)
-        return []
-
-    logger.info("Found %d news items for query=%s", len(news_results), query)
-    return news_results
-
-
-@function_tool
 @router.get("/stock")
 def stock(ticker: str) -> dict:
     """

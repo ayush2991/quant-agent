@@ -5,12 +5,11 @@ from openai import OpenAI
 from agents import Agent, Runner
 from yfinance_tools import (
     router as yfinance_router,
-    news,
     stock,
     financials,
     analysis_and_holdings,
 )
-from web_search_tools import router as web_search_router, web_search
+from web_search_tools import router as web_search_router, web_search, news
 from fastapi.middleware.cors import CORSMiddleware
 
 load_dotenv()
