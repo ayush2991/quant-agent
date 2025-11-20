@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import ReactMarkdown from "react-markdown";
 
 const DEFAULT_QUERY = "Is GOOG a good buy right now?";
@@ -9,14 +9,17 @@ export default function App() {
   const [output, setOutput] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+  const [showResult, setShowResult] = useState(false);
+  const resultRef = useRef(null);
 
   const handleSubmit = async (e) => {
     e?.preventDefault();
     if (!message.trim() || loading) return;
-    
+
     setLoading(true);
     setError(null);
     setOutput("");
+    setShowResult(true);
 
     try {
       const query = encodeURIComponent(message.trim());
@@ -37,64 +40,95 @@ export default function App() {
     }
   };
 
+  useEffect(() => {
+    if (showResult && resultRef.current) {
+      resultRef.current.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+  }, [showResult]);
+
   const isSubmitDisabled = loading || !message.trim();
 
-  const renderOutput = () => {
-    if (error) {
-      return (
-        <pre id="output" className="error" aria-live="polite">
-          {error}
-        </pre>
-      );
-    }
-    
-    if (output) {
-      return (
-        <div id="output" className="markdown-output" aria-live="polite">
-          <ReactMarkdown>{output}</ReactMarkdown>
-        </div>
-      );
-    }
-    
-    return null;
-  };
-
   return (
-    <div className="app">
-      <header>
-        <h1>Quant Agent</h1>
-      </header>
-      <main>
-        <form className="controls" onSubmit={handleSubmit}>
-          <input
-            type="text"
-            aria-label="query"
-            value={message}
-            onChange={(e) => setMessage(e.target.value)}
-            className="query-input"
-            placeholder="Enter your query..."
-            disabled={loading}
-          />
-          <button type="submit" disabled={isSubmitDisabled}>
-            {loading ? (
-              <span className="loading-text">
-                <span className="spinner"></span>
-                Analyzing...
-              </span>
-            ) : (
-              "Ask Agent"
-            )}
-          </button>
-        </form>
+    <div className="app-container">
+      <div className="background-glow"></div>
 
-        {loading && !error && !output && (
-          <div className="loading-message">
-            <div className="pulse"></div>
-            <p>Processing your request...</p>
+      <header className="app-header">
+        <div className="logo">
+          <i className="fa-solid fa-chart-line"></i>
+          <span>Quant Agent</span>
+        </div>
+      </header>
+
+      <main className="main-content">
+        <div className="hero-section">
+          <h1 className="hero-title">
+            Market Intelligence <br />
+            <span className="gradient-text">Reimagined</span>
+          </h1>
+          <p className="hero-subtitle">
+            Advanced AI analysis for stocks, financials, and market trends.
+          </p>
+        </div>
+
+        <div className="search-container">
+          <form className="search-form" onSubmit={handleSubmit}>
+            <div className="input-wrapper">
+              <i className="fa-solid fa-magnifying-glass search-icon"></i>
+              <input
+                type="text"
+                value={message}
+                onChange={(e) => setMessage(e.target.value)}
+                className="search-input"
+                placeholder="Ask about any stock or market trend..."
+                disabled={loading}
+              />
+              <button
+                type="submit"
+                className={`search-button ${loading ? 'loading' : ''}`}
+                disabled={isSubmitDisabled}
+              >
+                {loading ? <i className="fa-solid fa-circle-notch fa-spin"></i> : <i className="fa-solid fa-arrow-right"></i>}
+              </button>
+            </div>
+          </form>
+
+          <div className="suggestions">
+            <span>Try:</span>
+            <button onClick={() => setMessage("Analyze NVDA earnings")}>NVDA Earnings</button>
+            <button onClick={() => setMessage("Crypto market outlook")}>Crypto Outlook</button>
+            <button onClick={() => setMessage("Compare AAPL and MSFT")}>AAPL vs MSFT</button>
+          </div>
+        </div>
+
+        {(showResult || loading) && (
+          <div className="result-section" ref={resultRef}>
+            {loading && !output && !error && (
+              <div className="loading-state">
+                <div className="loader-pulse"></div>
+                <p>Analyzing market data...</p>
+              </div>
+            )}
+
+            {error && (
+              <div className="error-card">
+                <i className="fa-solid fa-circle-exclamation"></i>
+                <p>{error}</p>
+              </div>
+            )}
+
+            {output && (
+              <div className="result-card fade-in">
+                <div className="result-header">
+                  <i className="fa-solid fa-robot"></i>
+                  <span>Agent Analysis</span>
+                </div>
+                <div className="markdown-content">
+                  <ReactMarkdown>{output}</ReactMarkdown>
+                </div>
+              </div>
+            )}
           </div>
         )}
-
-        {renderOutput()}
       </main>
     </div>
   );
